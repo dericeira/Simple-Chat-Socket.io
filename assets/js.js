@@ -21,9 +21,11 @@ $(document).ready(function(){
         	var text = $("#textarea").val();
         	$("#textarea").val('');
         	var time = new Date();
-        	$(".chat").append('<li class="self"><div class="msg"><span>' + $("#nickname").val() + ':</span><p>' + text + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
-        	socket.emit("send", text);
-
+					$(".chat").append('<li class="self"><div class="msg"><span>' + $("#nickname").val() + ':</span><p>' + text + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
+					
+					socket.emit("send", text);
+					// automatically scroll down
+					document.getElementById('bottom').scrollIntoView();
         }
     });
 
@@ -36,8 +38,9 @@ $(document).ready(function(){
 
     socket.on("chat", function(client,msg) {
     	if (ready) {
-	    	var time = new Date();
-	    	$(".chat").append('<li class="other"><div class="msg"><span>' + client + ':</span><p>' + msg + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
+				var time = new Date();
+				$(".chat").append('<li class="field"><div class="msg"><span>' + client + ':</span><p>' + msg + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>' + toBottom);
+				
     	}
     });
 
